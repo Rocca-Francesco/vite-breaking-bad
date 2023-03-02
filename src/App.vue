@@ -8,23 +8,41 @@ export default {
   data() {
     return {
       store,
-      endPoint: "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=15&offset=0",
+      // salvo il mio endpoint per le chiamate axios base
+      baseEndPoint: "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=15&offset=0",
+
+      // inizialmente il mio endpoint sarà uguale a quello base
+      newEndPoint: "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=15&offset=0",
     }
   },
 
   components: { AppHeader, AppMain },
 
   created() {
-    axios.get(this.endPoint).then((response) => {
+    axios.get(this.baseEndPoint).then((response) => {
       store.cards = response.data.data;
     })
   },
 
   methods: {
+    generateCards(url) {
+      console.log(url);
+      axios.get(url).then((response) => {
+        store.cards = response.data.data;
+      })
+    },
+
     cardsTypeToSearch(typeChoose) {
-      console.log(typeChoose);
-      this.endPoint += "?type=" + typeChoose;
-      console.log(this.endPoint);
+      // se selezione all type la selezione mostra tutte le carte
+      if (typeChoose == "All Type") {
+        this.newEndPoint = this.baseEndPoint;
+        this.generateCards(this.newEndPoint)
+      }
+      else {
+        this.newEndPoint = this.baseEndPoint;
+        this.newEndPoint += "&type=" + typeChoose;
+        this.generateCards(this.newEndPoint)
+      }
     }
   }
 }

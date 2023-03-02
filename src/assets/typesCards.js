@@ -1,4 +1,7 @@
 export const typesCards = [
+  // add type to reset the select
+  "All Type",
+
   "Effect Monster",
   "Flip Effect Monster",
   "Flip Tuner Effect Monster",

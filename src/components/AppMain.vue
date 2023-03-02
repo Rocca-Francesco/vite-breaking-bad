@@ -29,7 +29,7 @@ export default {
           </select>
         </div>
         <div class="row row-cols-5">
-          <div id="cards" class="col text-center" v-for="card in store.cards">
+          <div class="cards col text-center" v-for="card in store.cards">
             <img :src="card.card_images[0].image_url" alt="">
             <h3 class="text-light">{{ card.name }}</h3>
             <span>{{ card.type }}</span>
@@ -49,7 +49,7 @@ export default {
   }
 }
 
-#cards {
+.cards {
   background-color: #d48f38;
 
   img {
