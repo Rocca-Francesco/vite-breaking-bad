@@ -8,22 +8,31 @@ export default {
   data() {
     return {
       store,
+      endPoint: "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=15&offset=0",
     }
   },
 
   components: { AppHeader, AppMain },
 
   created() {
-    axios.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?num=10&offset=0").then((response) => {
+    axios.get(this.endPoint).then((response) => {
       store.cards = response.data.data;
     })
+  },
+
+  methods: {
+    cardsTypeToSearch(typeChoose) {
+      console.log(typeChoose);
+      this.endPoint += "?type=" + typeChoose;
+      console.log(this.endPoint);
+    }
   }
 }
 </script>
 
 <template>
   <AppHeader />
-  <AppMain />
+  <AppMain @searchType="cardsTypeToSearch" />
 </template>
 
 <style lang="scss">

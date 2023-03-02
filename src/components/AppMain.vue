@@ -1,12 +1,21 @@
 <script>
 import { store } from "../assets/store";
+import { typesCards } from "../assets/typesCards";
 
 export default {
   data() {
     return {
       store,
+      typesCards,
+      typeChoose: '',
     }
   },
+
+  methods: {
+    typeChange(typeChoose) {
+      this.$emit('searchType', typeChoose);
+    }
+  }
 }
 </script>
 
@@ -14,11 +23,16 @@ export default {
   <main>
     <section id="cardsList">
       <div class="container">
+        <div class="p-2">
+          <select name="cardsType" id="cardsType" v-model="typeChoose" @change="typeChange(typeChoose)">
+            <option v-for="types in typesCards" :value="types">{{ types }}</option>
+          </select>
+        </div>
         <div class="row row-cols-5">
           <div id="cards" class="col text-center" v-for="card in store.cards">
             <img :src="card.card_images[0].image_url" alt="">
             <h3 class="text-light">{{ card.name }}</h3>
-            <span>{{ card.archetype }}</span>
+            <span>{{ card.type }}</span>
           </div>
         </div>
       </div>
